@@ -3,9 +3,8 @@ Syracuse University
 
 IST-687: Introduction to Data Science
 
-Report By:
+Report By: Gavin Grosswald
 
-Gavin Grosswald
 
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/a9dbd4ce-6f4c-4318-bb2e-cba9bf4a8499)
 
