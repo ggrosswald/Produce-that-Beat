@@ -29,6 +29,16 @@ Produce That Beat will leverage Spotify data to guide the music production proce
 
 ## Spotify Data Set
 
+![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/6c2dbd5c-ac51-4cd5-8d58-83ca644e34cb)
+
+![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/7c0e6053-9892-4594-8a23-dc4ee216e596)
+
+![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/025505cf-abcb-4c29-aa17-1c143cb27401)
+
+![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/621bba4c-6d23-47b5-9ab3-e9b1faf9a7c1)
+
+
+
 
 
 
