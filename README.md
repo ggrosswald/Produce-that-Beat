@@ -11,7 +11,7 @@ Report By: Gavin Grosswald, Erika Haase, Maybel Herrera, Anthonyo Kinch-Rice
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/a9dbd4ce-6f4c-4318-bb2e-cba9bf4a8499)
 
 
-## About Us
+## About Us: Executive Summary
 Produce that Beat (“the Label”) is an innovative record label poised to revolutionize the music industry. The label has histroically relied on its Agents experience in the indistry and understanding of the characterists that generate success in the business when searching for new talent. While this has been successful for the Label, it has certainly come with its challenges and failures. At Produce that Beats 2023 annual Board of Directors meeting, a new stratagy was devloped to help the Label compete with while minimizing additional risk.
 
 
