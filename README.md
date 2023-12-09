@@ -28,9 +28,34 @@ Produce That Beat aims to streamline the process of discovering the next big art
 Produce That Beat will leverage Spotify data to guide the music production process. By identifying patterns in successful songs, analyzing key elements that resonate with audiences, and staying attuned to evolving musical preferences, the Label will aim to produce songs that have an increased likelihood of topping the charts. This strategy positions the Label to consistently deliver content that aligns with current market demands while maximizing the Label’s success in the competitive music landscape.
 
 
-## Spotify Data Set
+## Data Set: Most Streamed Spotify Songs 2023
 
-The Spotify data set was pulled from [Enter website] and inlcudes Spotify's top 100 songs. Metrics include 
+The Spotify data set was sourced from kaggle.com and is a comprehensive list of the most popular songs of 2023 as determined by the Spotify music stremaing platform. Key attributes of the data set include
+
+- Song Title: Name of the song
+- Artist Name: Name of the artist(s) of the song
+- Artist Count: Number of artists contributing to the song
+- Song Release Year: Year when the song was released
+- Song Release Month: Month when the song was released
+- Song Release Day: Day of the month when the song was released
+- Spotify Playlist Count: Number of Spotify playlists the song is included in
+- Spotify Charts Count: Presence and rank of the song on Spotify charts
+- Total Streams: Total number of streams on Spotify
+- Apple Playlist Count: Number of Apple Music playlists the song is included in
+- Apple Charts Count: Presence and rank of the song on Apple Music charts
+- Deezer Playlist Count: Number of Deezer playlists the song is included in
+- Deezer Charts Count: Presence and rank of the song on Deezer charts
+- Shazam Charts Count: Presence and rank of the song on Shazam charts
+- BPM: Beats per minute, a measure of song tempo
+- Key: Key of the song
+- Mode: Mode of the song (major or minor)
+- Danceability: Percentage indicating how suitable the song is for dancing
+- Valence: Positivity of the song's musical content
+- Energy: Perceived energy level of the song
+- Acousticness: Amount of acoustic sound in the song
+- Instrumentalness: Amount of instrumental content in the song
+- Liveness: Presence of live performance elements
+- Speechiness: Amount of spoken words in the song
 
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/e5879290-edc3-42a4-8dc9-f587b31e10ba)
 
