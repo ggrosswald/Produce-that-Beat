@@ -32,7 +32,7 @@ Produce That Beat will leverage Spotify data to guide the music production proce
 
 The Spotify data set was pulled from [Enter website] and inlcudes Spotify's top 100 songs. Metrics include 
 
-![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/e5879290-edc3-42a4-8dc9-f587b31e10ba) ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/7c0e6053-9892-4594-8a23-dc4ee216e596) ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/025505cf-abcb-4c29-aa17-1c143cb27401) ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/71d7a976-165d-47e8-afb4-eebc04cbf627)
+![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/e5879290-edc3-42a4-8dc9-f587b31e10ba)           ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/7c0e6053-9892-4594-8a23-dc4ee216e596)           ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/025505cf-abcb-4c29-aa17-1c143cb27401)           ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/71d7a976-165d-47e8-afb4-eebc04cbf627)
 
 
 
