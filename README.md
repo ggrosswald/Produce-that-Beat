@@ -27,5 +27,8 @@ Produce That Beat aims to streamline the process of discovering the next big art
 Produce That Beat will leverage Spotify data to guide the music production process. By identifying patterns in successful songs, analyzing key elements that resonate with audiences, and staying attuned to evolving musical preferences, the Label will aim to produce songs that have an increased likelihood of topping the charts. This strategy positions the Label to consistently deliver content that aligns with current market demands while maximizing the Label’s success in the competitive music landscape.
 
 
+## Spotify Data Set
+
+
 
 
