@@ -69,7 +69,10 @@ The Spotify data set was sourced from kaggle.com and is a comprehensive list of 
 
 ## Future cosndierations
 
+The Spotify data set was instrumental in Produce that Beat's analysis and strategic pivot. For future anaylsis, the Label would look to obtain additional data to help drive any greater insights. Some additonal consierations include:
 
+- Artist Nationality and Streamer Nationality: The Label would like to understand if there is a correlation between the nationality of an artist and the nationalitly of their most poplar listenrs
+- Deezer is a stremaing platform founded in France. The Label would like insight into Deezers user demographics to understand if there is a correlation between country of orgin and both the nationality of artists and platform users 
 
 
 ## Conclusion
