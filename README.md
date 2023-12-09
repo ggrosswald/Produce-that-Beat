@@ -67,6 +67,11 @@ The Spotify data set was sourced from kaggle.com and is a comprehensive list of 
 
 
 
+## Future cosndierations
+
+
+
+
 ## Conclusion
 
 The strategic integration of Spotify data analysis into Produce that Beat's operations marks a pivotal moment in the label's evolution. Recognizing the need for innovation in talent discovery and music production, the Label has embarked on a data-driven journey that combines industry expertise with cutting-edge analytics.
