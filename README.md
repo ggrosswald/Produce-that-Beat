@@ -11,23 +11,14 @@ Report By: Anthonyo Kinch-Rice, Eika Haase, Gavin Grosswald, Maybel Herrera
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/a9dbd4ce-6f4c-4318-bb2e-cba9bf4a8499)
 
 
-## Table of Contents
-Introduction <br />
+## Introduction
+This project is intended to support studens in understanding how to interpeate and manipulate large data sets. The requirements for this project were to select a data set that with atleast 10,000 data points. 
 
-About Us
-
-The Data Set
-
-Data Analysis
-
-Future Considerations
-
-Conclusion
-
+We have decided to take on the roles of music producers for a new upcoming label, Produce that Beat ("the Label"). Produce that Beat has the tenacity and drive to be a disrupter in the musice industry. The Label has recruited the data analysis team to help devlop a new stratagy to create immediate success. The Label provided the data analysis team with a Spotfy data set to help guide the decision making process. The Label wants the data science team to leverage the data set to help determine what kind of artist and what kind of songs have the highest liklihhod of topping the music charts.
 
 ## About Us: Executive Summary
 
-Produce that Beat (“the Label”) is an innovative record label poised to revolutionize the music industry. The label has histroically relied on its Agents experience in the indistry and understanding of the characterists that generate success in the business when searching for new talent. While this has been successful for the Label, it has certainly come with its challenges and failures. At Produce that Beats 2023 annual Board of Directors meeting, a new stratagy was devloped to help the Label compete with while minimizing additional risk.
+Produce that Beat is an innovative record label poised to revolutionize the music industry. The label has histroically relied on its Agents experience in the indistry and understanding of the characterists that generate success in the business when searching for new talent. While this has been successful for the Label, it has certainly come with its challenges and failures. At Produce that Beats 2023 annual Board of Directors meeting, a new stratagy was devloped to help the Label compete with while minimizing additional risk.
 
 
 By strategically leveraging Spotify data of the top 1,000 artists and songs, the Label aims to identify emerging artists and produce chart-topping songs. By combining data analytics with a deep understanding of music trends, the Label strives to establish itself as a leader in the industry, paving way to a new era of talent discovery and music production.
