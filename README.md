@@ -76,7 +76,7 @@ The Spotify data set was instrumental in Produce that Beat's analysis and strate
 - Artist Nationality and Streamer Nationality: The Label would like to understand if there is a correlation between the nationality of an artist and the nationalitly of their most poplar listenrs
 - Deezer is a stremaing platform founded in France. The Label would like insight into Deezers user demographics to understand if there is a correlation between country of orgin and both the nationality of artists and platform users
 - -Genere
-- Like songs in playslist to helop generate recommendations
+- Like songs in playslist to help generate recommendations
 - Basket Analysis of User Playlists
 
 
