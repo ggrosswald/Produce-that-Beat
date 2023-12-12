@@ -65,9 +65,11 @@ The Spotify data set was sourced from kaggle.com and is a comprehensive list of 
 
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/71d7a976-165d-47e8-afb4-eebc04cbf627)
 
+## Data Analysis
 
 
-## Future cosndierations
+
+## Future Considerations
 
 The Spotify data set was instrumental in Produce that Beat's analysis and strategic pivot. For future anaylsis, the Label would look to obtain additional data to help drive any greater insights. Some additonal consierations include:
 
