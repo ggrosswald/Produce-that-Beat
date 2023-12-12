@@ -13,10 +13,15 @@ Report By: Anthonyo Kinch-Rice, Eika Haase, Gavin Grosswald, Maybel Herrera
 
 ## Table of Contents
 Introduction
+
 About Us
+
 The Data Set
+
 Data Analysis
+
 Future Considerations
+
 Conclusion
 
 
