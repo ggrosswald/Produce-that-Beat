@@ -12,7 +12,7 @@ Report By: Anthonyo Kinch-Rice, Eika Haase, Gavin Grosswald, Maybel Herrera
 
 
 ## Table of Contents
-Introduction
+Introduction <br />
 
 About Us
 
