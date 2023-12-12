@@ -3,7 +3,7 @@ Syracuse University
 
 IST-687: Introduction to Data Science
 
-Report By: Gavin Grosswald, Erika Haase, Maybel Herrera, Anthonyo Kinch-Rice
+Report By: Anthonyo Kinch-Rice. Erika Haase, Gavin Grosswald, Maybel Herrera
 
 
 ## Company Logo
@@ -30,7 +30,7 @@ Produce That Beat will leverage Spotify data to guide the music production proce
 
 ## Data Set: Most Streamed Spotify Songs 2023
 
-The Spotify data set was sourced from kaggle.com and is a comprehensive list of the most popular songs of 2023 as determined by the Spotify music stremaing platform. Key attributes of the data set include
+The Spotify data set was sourced from kaggle.com and is a comprehensive list of the most popular songs of 2023 as determined by the Spotify music stremaing platform. Key attributes of the data set include:
 
 - Song Title: Name of the song
 - Artist Name: Name of the artist(s) of the song
@@ -66,13 +66,32 @@ The Spotify data set was sourced from kaggle.com and is a comprehensive list of 
 ![image](https://github.com/ggrosswald/Produce-that-Beat/assets/150206089/71d7a976-165d-47e8-afb4-eebc04cbf627)
 
 
+## Data Analysis
+
+Summarize how we cleaned the data
+- 24 variabls and 953 observations
+Removed all NA via interpolation
+
+
+Ran an intial linear regression model with all vairbales and has an adjusted R2 or 44.2% when you 0 out the y-intercept - we 0 out the intercept because songs dont have any sort of foundational metrics and you are not guarenteed any streams
+
+
+From the intial regression, we determined many of the varibales to be insignificant and decided to run a train / test set at the 80% mark
+Determined to focus our analysis on beats per minute, energy, acousticness, and speechiness and ran regression model
+
+
+
+
+
 
 ## Future cosndierations
 
 The Spotify data set was instrumental in Produce that Beat's analysis and strategic pivot. For future anaylsis, the Label would look to obtain additional data to help drive any greater insights. Some additonal consierations include:
 
 - Artist Nationality and Streamer Nationality: The Label would like to understand if there is a correlation between the nationality of an artist and the nationalitly of their most poplar listenrs
-- Deezer is a stremaing platform founded in France. The Label would like insight into Deezers user demographics to understand if there is a correlation between country of orgin and both the nationality of artists and platform users 
+- Deezer is a stremaing platform founded in France. The Label would like insight into Deezers user demographics to understand if there is a correlation between country of orgin and both the nationality of artists and platform users
+- Preference analysis - Can see what kind of like songs are in playlists (recomendations)
+- Genre
 
 
 ## Conclusion
