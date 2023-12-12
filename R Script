@@ -127,7 +127,7 @@ head(spotify_matrix)
 spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=stopwords("english"))
 spotify_dtm <- dfm_trim(spotify_dtm, min_termfreq = 2)
 spotify_dtm
-
+#Wordcloud
 textplot_wordcloud(spotify_dtm)
 
 webWords <- as.matrix(spotify_dtm)
