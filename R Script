@@ -18,7 +18,7 @@ Spotify_data_raw <- read.csv("C:/Users/gsgro/OneDrive/Desktop/Syr_MSBA/Term 2/Da
 summary(Spotify_data_raw)
 str(Spotify_data_raw)
 head(Spotify_data_raw)
-total_na <- sum(is.na(Spotify_data_raw))
+
 
 # Update column names
 spotify_data_clean <- Spotify_data_raw %>%
@@ -87,26 +87,35 @@ spotify_data_clean <- spotify_data_clean[, c("Song_Title",
                                              "Liveness",
                                              "Speechiness")]
 
-# Linear regression model
+# NA Check and Removal
 na_indices <- which(is.na(spotify_data_clean$Total_Streams))
 na_indices
 
 spotify_data_clean$Total_Streams[is.na(spotify_data_clean$Total_Streams)] <- 0
 
+#Linear Regression with all variables
 linear_regression1 <- lm(formula = Total_Streams ~ Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
 summary(linear_regression1)
 
-# Graph the regression model
+# Graph Actual vs Predicted
 predicted_values <- data.frame(Observed = spotify_data_clean$Total_Streams, Predicted = predict(linear_regression1))
 
 ggplot(predicted_values, aes(x = Observed, y = Predicted)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +
-  labs(title = "Scatter Plot of Observed vs Predicted Values", x = "Observed Total Streams", y = "Predicted Total Streams")
+  labs(title = "Scatter Plot of Observed vs Predicted Values", x = "Actual Total Streams", y = "Predicted Total Streams")
 
-# Revised linear regression model inputs based on model1 p-values
-linear_regression2 <- lm(formula = Total_Streams ~ Danceability + Energy + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
+# Revised linear regression model with 0 intercept
+linear_regression2 <- lm(formula = Total_Streams ~ 0+ Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
 summary(linear_regression2)
+
+#Revised linear regression with selected factors that we find to be significant with 0 intercept
+linear_regression3 <- lm(formula = Total_Streams ~ 0+ Beats_per_Minute + Energy + Acousticness +Speechiness, data = spotify_data_clean)
+summary(linear_regression3)
+
+#With a high stream amount and the variables in % form, the log of total streams was taken
+linear_regression4 <- lm(formula = log1p(Total_Streams) ~ 0+ Beats_per_Minute + Energy + Acousticness +Speechiness, data = spotify_data_clean)
+summary(linear_regression4)
 
 # Create numeric DF to user for correlation analysis
 Spotify_data_correlation <- subset(spotify_data_clean, select = -c(Song_Title, Artist_Name, Song_Release_Date, Days_Since_Today, Spotify_Playlist_Count, Spotify_Charts_Count, Apple_Playlist_Count, Apple_Charts_Count, Deezer_Playlist_Count, Deezer_Charts_Count, Shazam_Charts_Count))
@@ -124,12 +133,13 @@ print(spotify_corpus)
 spotify_matrix <- dfm(spotify_corpus)
 head(spotify_matrix)
 
-spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=stopwords("english"))
+spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=c(stopwords("english"),stopwords("spanish"), "que","feat", "remix", "un", "la", "explicit", "ver", "ella","�"))
+spotify_dtm
 spotify_dtm <- dfm_trim(spotify_dtm, min_termfreq = 2)
 spotify_dtm
 #Wordcloud
 textplot_wordcloud(spotify_dtm)
-
+#view(spotify_data_clean)
 webWords <- as.matrix(spotify_dtm)
 str(webWords)
 
