@@ -19,6 +19,8 @@ summary(Spotify_data_raw)
 str(Spotify_data_raw)
 head(Spotify_data_raw)
 
+#Review Metrics
+
 
 # Update column names
 spotify_data_clean <- Spotify_data_raw %>%
@@ -116,6 +118,27 @@ summary(linear_regression3)
 #With a high stream amount and the variables in % form, the log of total streams was taken
 linear_regression4 <- lm(formula = log1p(Total_Streams) ~ 0+ Beats_per_Minute + Energy + Acousticness +Speechiness, data = spotify_data_clean)
 summary(linear_regression4)
+#Examine difference in charts vs streams and compare to other platforms
+#Spotify
+linear_regression5 <- lm(formula = Spotify_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regression5)
+#Apple
+linear_regression6 <- lm(formula = Apple_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regression6)
+#Deezer
+linear_regression7 <- lm(formula = Deezer_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regression7)
+
+#Review taking the log of charts vs streams and compare to other platforms
+#Spotify
+linear_regression8<- lm(formula = log1p(Spotify_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regression8)
+#Apple
+linear_regression9 <- lm(formula = log1p(Apple_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regressionn9)
+#Deezer
+linear_regression10 <- lm(formula = log1p(Deezer_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+summary(linear_regression10)
 
 # Create numeric DF to user for correlation analysis
 Spotify_data_correlation <- subset(spotify_data_clean, select = -c(Song_Title, Artist_Name, Song_Release_Date, Days_Since_Today, Spotify_Playlist_Count, Spotify_Charts_Count, Apple_Playlist_Count, Apple_Charts_Count, Deezer_Playlist_Count, Deezer_Charts_Count, Shazam_Charts_Count))
@@ -132,8 +155,8 @@ print(spotify_corpus)
 
 spotify_matrix <- dfm(spotify_corpus)
 head(spotify_matrix)
-
-spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=c(stopwords("english"),stopwords("spanish"), "que","feat", "remix", "un", "la", "explicit", "ver", "ella","�"))
+#Reviewed to remove additional words, Spanish stopword, errors, explicit
+spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=c(stopwords("english"),stopwords("spanish"), "que", "un", "la", "feat", "remix", "explicit", "ver", "ella","�"))
 spotify_dtm
 spotify_dtm <- dfm_trim(spotify_dtm, min_termfreq = 2)
 spotify_dtm
