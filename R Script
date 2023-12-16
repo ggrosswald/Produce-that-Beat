@@ -21,6 +21,18 @@ head(Spotify_data_raw)
 
 #Review Metrics
 
+hist(spotify_data_clean$Speechiness ,xlab='Speechiness ',main='Histogram of Spotify Top 1000 Songs Speechiness Metric', col="skyblue1",breaks = seq(min(spotify_data_clean$Speechiness), max(spotify_data_clean$Speechiness)), length.out = 7, probability = TRUE)
+abline(v=mean(spotify_data_clean$Speechiness ), col="black", lwd=3)
+
+hist(spotify_data_clean$Beats_per_Minute ,xlab='Beats per Minute',main='Histogram of Spotify Top 1000 Songs Beats per Minute Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Beats_per_Minute ), col="black", lwd=3)
+
+hist(spotify_data_clean$Energy ,xlab='Energy',main='Histogram of Spotify Top 1000 Songs Energy Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Energy ), col="black", lwd=3)
+
+hist(spotify_data_clean$Acousticness,xlab='Acousticness',main='Histogram of Spotify Top 1000 Songs Acousticness Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Acousticness ), col="black", lwd=3)
+
 
 # Update column names
 spotify_data_clean <- Spotify_data_raw %>%
