@@ -1,38 +1,32 @@
 # Package library
+#install.packages("rpart")
 library(rpart)
+#install.packages("kernlab")
 library(kernlab)
+#install.packages("caret")
 library(caret)
+#install.packages("lattice")
 library(lattice)
+#install.packages("tidyverse")
 library(tidyverse)
+#install.packages("dplyr")
 library(dplyr)
+#install.packages("ggplot2")
 library(ggplot2)
+#install.packages("corrplot")
 library(corrplot)
+#install.packages("quanteda")
 library(quanteda)
+#install.packages("quanteda.textplots")
 library(quanteda.textplots)
 
-#Comment
 # Convert Spotify CSV into dataframe
 Spotify_data_raw <- read.csv("C:/Users/gsgro/OneDrive/Desktop/Syr_MSBA/Term 2/Data Science/Final Project/Spotify Dataset.csv")
 
-# Review Spotify data
+# Review Spotify raw data
 summary(Spotify_data_raw)
 str(Spotify_data_raw)
 head(Spotify_data_raw)
-
-#Review Metrics
-
-hist(spotify_data_clean$Speechiness ,xlab='Speechiness ',main='Histogram of Spotify Top 1000 Songs Speechiness Metric', col="skyblue1",breaks = seq(min(spotify_data_clean$Speechiness), max(spotify_data_clean$Speechiness)), length.out = 7, probability = TRUE)
-abline(v=mean(spotify_data_clean$Speechiness ), col="black", lwd=3)
-
-hist(spotify_data_clean$Beats_per_Minute ,xlab='Beats per Minute',main='Histogram of Spotify Top 1000 Songs Beats per Minute Metric', col="skyblue1", probability = TRUE)
-abline(v=mean(spotify_data_clean$Beats_per_Minute ), col="black", lwd=3)
-
-hist(spotify_data_clean$Energy ,xlab='Energy',main='Histogram of Spotify Top 1000 Songs Energy Metric', col="skyblue1", probability = TRUE)
-abline(v=mean(spotify_data_clean$Energy ), col="black", lwd=3)
-
-hist(spotify_data_clean$Acousticness,xlab='Acousticness',main='Histogram of Spotify Top 1000 Songs Acousticness Metric', col="skyblue1", probability = TRUE)
-abline(v=mean(spotify_data_clean$Acousticness ), col="black", lwd=3)
-
 
 # Update column names
 spotify_data_clean <- Spotify_data_raw %>%
@@ -63,8 +57,8 @@ spotify_data_clean <- Spotify_data_raw %>%
 
 # Combine Release year, month, and day into one column
 spotify_data_clean$Song_Release_Date <- as.Date(paste(spotify_data_clean$Song_Release_Year, 
-                                           spotify_data_clean$Song_Release_Month, 
-                                           spotify_data_clean$Song_Release_Day, sep = "-"))
+                                                      spotify_data_clean$Song_Release_Month, 
+                                                      spotify_data_clean$Song_Release_Day, sep = "-"))
 
 # Delete Release year, month, and day from dataframe
 spotify_data_clean <- spotify_data_clean %>%
@@ -107,57 +101,113 @@ na_indices
 
 spotify_data_clean$Total_Streams[is.na(spotify_data_clean$Total_Streams)] <- 0
 
-#Linear Regression with all variables
+# Review Spotify clean data
+summary(spotify_data_clean)
+str(spotify_data_clean)
+head(spotify_data_clean)
+
+# Create numeric DF to user for correlation analysis
+Spotify_data_correlation <- subset(spotify_data_clean, select = -c(Song_Title, 
+                                                                   Artist_Name, 
+                                                                   Song_Release_Date, 
+                                                                   Days_Since_Today, 
+                                                                   Spotify_Playlist_Count, 
+                                                                   Spotify_Charts_Count, 
+                                                                   Apple_Playlist_Count, 
+                                                                   Apple_Charts_Count, 
+                                                                   Deezer_Playlist_Count, 
+                                                                   Deezer_Charts_Count, 
+                                                                   Shazam_Charts_Count))
+
+# Review Metrics
+hist(spotify_data_clean$Speechiness ,xlab='Speechiness ',main='Histogram of Spotify Top 1000 Songs Speechiness Metric', col="skyblue1",breaks = seq(min(spotify_data_clean$Speechiness), max(spotify_data_clean$Speechiness)), length.out = 7, probability = TRUE)
+abline(v=mean(spotify_data_clean$Speechiness ), col="black", lwd=3)
+
+hist(spotify_data_clean$Beats_per_Minute ,xlab='Beats per Minute',main='Histogram of Spotify Top 1000 Songs Beats per Minute Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Beats_per_Minute ), col="black", lwd=3)
+
+hist(spotify_data_clean$Energy ,xlab='Energy',main='Histogram of Spotify Top 1000 Songs Energy Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Energy ), col="black", lwd=3)
+
+hist(spotify_data_clean$Acousticness,xlab='Acousticness',main='Histogram of Spotify Top 1000 Songs Acousticness Metric', col="skyblue1", probability = TRUE)
+abline(v=mean(spotify_data_clean$Acousticness ), col="black", lwd=3)
+
+# Correlation analysis - all metrics
+correlation_analysis1 <- cor(Spotify_data_correlation)
+correlation_analysis1
+
+# Correlation analysis - select metrics
+Spotify_data_correlation_select <- subset(Spotify_data_correlation, select = -c(Danceability,
+                                                                                Valence,
+                                                                                Instrumentalness,
+                                                                                Liveness))
+
+correlation_analysis2 <- cor(Spotify_data_correlation_select)
+correlation_analysis2
+
+# Linear Regression with all variables
 linear_regression1 <- lm(formula = Total_Streams ~ Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
 summary(linear_regression1)
 
-# Graph Actual vs Predicted
-predicted_values <- data.frame(Observed = spotify_data_clean$Total_Streams, Predicted = predict(linear_regression1))
+# Graph Actual vs Predicted (linear regression 1)
+predicted_values1 <- data.frame(Observed = spotify_data_clean$Total_Streams, Predicted = predict(linear_regression1))
 
-ggplot(predicted_values, aes(x = Observed, y = Predicted)) +
+ggplot(predicted_values1, aes(x = Observed, y = Predicted)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +
   labs(title = "Scatter Plot of Observed vs Predicted Values", x = "Actual Total Streams", y = "Predicted Total Streams")
 
 # Revised linear regression model with 0 intercept
-linear_regression2 <- lm(formula = Total_Streams ~ 0+ Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
+linear_regression2 <- lm(formula = Total_Streams ~ 0 + Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
 summary(linear_regression2)
 
-#Revised linear regression with selected factors that we find to be significant with 0 intercept
-linear_regression3 <- lm(formula = Total_Streams ~ 0+ Beats_per_Minute + Energy + Acousticness +Speechiness, data = spotify_data_clean)
+predicted_values2 <- data.frame(Observed = spotify_data_clean$Total_Streams, Predicted = predict(linear_regression2))
+
+ggplot(predicted_values2, aes(x = Observed, y = Predicted)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Scatter Plot of Observed vs Predicted Values", x = "Actual Total Streams", y = "Predicted Total Streams")
+
+# Revised linear regression with selected factors that we find to be significant with 0 intercept
+linear_regression3 <- lm(formula = Total_Streams ~ 0 + Beats_per_Minute + Energy + Acousticness + Speechiness, data = spotify_data_clean)
 summary(linear_regression3)
 
-#With a high stream amount and the variables in % form, the log of total streams was taken
-linear_regression4 <- lm(formula = log1p(Total_Streams) ~ 0+ Beats_per_Minute + Energy + Acousticness +Speechiness, data = spotify_data_clean)
+predicted_values3 <- data.frame(Observed = spotify_data_clean$Total_Streams, Predicted = predict(linear_regression3))
+
+ggplot(predicted_values3, aes(x = Observed, y = Predicted)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Scatter Plot of Observed vs Predicted Values", x = "Actual Total Streams", y = "Predicted Total Streams")
+
+# With a high stream amount and the variables in % form, the log of total streams was taken
+linear_regression4 <- lm(formula = log1p(Total_Streams) ~ 0 + Beats_per_Minute + Energy + Acousticness + Speechiness, data = spotify_data_clean)
 summary(linear_regression4)
-#Examine difference in charts vs streams and compare to other platforms
-#Spotify
-linear_regression5 <- lm(formula = Spotify_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+
+# Examine difference in charts vs streams and compare to other platforms
+# Spotify
+linear_regression5 <- lm(formula = Spotify_Charts_Count ~ 0 + Beats_per_Minute + Energy + Acousticness + Speechiness, data = spotify_data_clean)
 summary(linear_regression5)
-#Apple
-linear_regression6 <- lm(formula = Apple_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+
+# Apple
+linear_regression6 <- lm(formula = Apple_Charts_Count ~ 0 + Beats_per_Minute + Energy + Acousticness + Speechiness, data = spotify_data_clean)
 summary(linear_regression6)
-#Deezer
-linear_regression7 <- lm(formula = Deezer_Charts_Count~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+
+# Deezer
+linear_regression7 <- lm(formula = Deezer_Charts_Count ~ 0 + Beats_per_Minute + Energy + Acousticness + Speechiness, data = spotify_data_clean)
 summary(linear_regression7)
 
-#Review taking the log of charts vs streams and compare to other platforms
+# Review taking the log of charts vs streams and compare to other platforms
 #Spotify
-linear_regression8<- lm(formula = log1p(Spotify_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
+linear_regression8<- lm(formula = log1p(Spotify_Charts_Count) ~ 0 + Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
 summary(linear_regression8)
-#Apple
+
+# Apple
 linear_regression9 <- lm(formula = log1p(Apple_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
-summary(linear_regressionn9)
-#Deezer
+summary(linear_regression9)
+
+# Deezer
 linear_regression10 <- lm(formula = log1p(Deezer_Charts_Count)~ 0+ Beats_per_Minute + Energy + Acousticness +   Speechiness, data = spotify_data_clean)
 summary(linear_regression10)
-
-# Create numeric DF to user for correlation analysis
-Spotify_data_correlation <- subset(spotify_data_clean, select = -c(Song_Title, Artist_Name, Song_Release_Date, Days_Since_Today, Spotify_Playlist_Count, Spotify_Charts_Count, Apple_Playlist_Count, Apple_Charts_Count, Deezer_Playlist_Count, Deezer_Charts_Count, Shazam_Charts_Count))
-
-# Correlation analysis
-correlation_analysis <- cor(Spotify_data_correlation)
-correlation_analysis
 
 # Word cloud
 spotify_corpus <- corpus(spotify_data_clean$Song_Title)
@@ -167,17 +217,20 @@ print(spotify_corpus)
 
 spotify_matrix <- dfm(spotify_corpus)
 head(spotify_matrix)
-#Reviewed to remove additional words, Spanish stopword, errors, explicit
-spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=c(stopwords("english"),stopwords("spanish"), "que", "un", "la", "feat", "remix", "explicit", "ver", "ella","�"))
+
+# Reviewed to remove additional words, Spanish stopword, errors, explicit
+spotify_dtm <- dfm(spotify_corpus, stem = TRUE, remove_punct = TRUE, remove=c(stopwords("english"),stopwords("spanish"), "que", "un", "la", "feat", "remix", "explicit", "ver", "�", "vol", "bzrp", "Taylor", "bts"))
 spotify_dtm
 spotify_dtm <- dfm_trim(spotify_dtm, min_termfreq = 2)
 spotify_dtm
-#Wordcloud
+
+# Wordcloud
 textplot_wordcloud(spotify_dtm)
-#view(spotify_data_clean)
+
 webWords <- as.matrix(spotify_dtm)
 str(webWords)
 
+# Word counts
 wordCounts <- colSums(webWords)
 wordCounts <- sort(wordCounts, decreasing = TRUE)
-head(wordCounts, 20)
+head(wordCounts, 10)
