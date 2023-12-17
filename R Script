@@ -98,7 +98,9 @@ spotify_data_clean <- spotify_data_clean[, c("Song_Title",
 # NA Check and Removal
 na_indices <- which(is.na(spotify_data_clean$Total_Streams))
 na_indices
+spotify_data_clean$Total_Streams <- na_interpolation(spotify_data_clean$Total_Streams)
 
+spotify_data_clean$Total_Streams[is.na(spotify_data_clean$Total_Streams)] 
 spotify_data_clean$Total_Streams[is.na(spotify_data_clean$Total_Streams)] <- 0
 
 # Review Spotify clean data
@@ -144,6 +146,13 @@ Spotify_data_correlation_select <- subset(Spotify_data_correlation, select = -c(
 
 correlation_analysis2 <- cor(Spotify_data_correlation_select)
 correlation_analysis2
+
+#visual for correlation analysis
+# Calculate correlation matrix
+cor_matrix <- cor(spotify_data_clean[, c("Beats_per_Minute", "Danceability", "Valence", "Energy", "Acousticness", "Instrumentalness", "Liveness", "Speechiness")])
+cor_matrix
+# Visualize the correlation matrix
+corrplot(cor_matrix, method = "color")
 
 # Linear Regression with all variables
 linear_regression1 <- lm(formula = Total_Streams ~ Beats_per_Minute + Danceability + Valence + Energy + Acousticness + Instrumentalness + Liveness + Speechiness, data = spotify_data_clean)
@@ -234,3 +243,167 @@ str(webWords)
 wordCounts <- colSums(webWords)
 wordCounts <- sort(wordCounts, decreasing = TRUE)
 head(wordCounts, 10)
+
+# Bar Plots 
+#bar plot total stream v Danceability
+ #Total streams are higher with higher percentage of danceability 
+ ggplot(spotify_data_clean, aes(x = Danceability, y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs. Danceability", x = "Danceability", y = "Total Streams")
+
+ 
+ #barplot  total stream v valence 
+ #Total streams then to fluctuate with mood levels. We have a high peak at 25% and other high peaks between 50 and 75%
+ ggplot(spotify_data_clean, aes(x = Valence, y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+  
+   labs(title = "Total Streams vs. Valence", x = "Valence", y = "Total Streams")
+ 
+ #barplot total stream v energy
+ #Total streams increase when energy level increases. The highest streams we between 50 to80 percent in energ % in a song. 
+
+ ggplot(spotify_data_clean, aes(x = Energy,
+                                y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs. Energy", x = "Energy", y = "Total Streams")
+ 
+ #Barplot total stream v acousticness
+ #Total streams are higher when Acousticness is at the lowest percentage. 
+ ggplot(spotify_data_clean, aes(x = Acousticness, y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs.Acousticness ", x = "Acousticness", y = "Total Streams")
+ 
+ #Barplot total streams v Instrumentalness
+ #Total streams are at its higher when Instrumentalness is at its lowest. 
+ ggplot(spotify_data_clean, aes(x = Instrumentalness , y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs. Instrumentalness ", x = "Instrumentalness", y = "Total Streams")
+ 
+ #Barplot total streams v liveness
+ #Total streams are  higher when liveness is lower.
+ ggplot(spotify_data_clean, aes(x = Liveness , y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs. Liveness ", x = "Liveness", y = "Total Streams")
+ 
+ #barplot total streams v speechiness
+ #Total streams are higher when speech is lower. 
+ ggplot(spotify_data_clean, aes(x = Speechiness , y = Total_Streams)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Total Streams vs. Speechiness ", x = "Speechiness", y = "Total Streams")
+ 
+ #Max Total Streams
+  
+ which.max(spotify_data_clean$Total_Streams)
+ spotify_data_clean[56,]
+ spotify_data_clean [56, 13:20]
+ #Min in Total Streams
+ which.min(spotify_data_clean$Total_Streams)
+ spotify_data_clean[575,]
+ spotify_data_clean[575, 13:20 ]
+ spotify_data_clean [575,3]
+ #max in Chart counts
+ which.max(spotify_data_clean$Spotify_Charts_Count)
+ spotify_data_clean [1,1:2]
+ spotify_data_clean[1,13:20]
+ #Min in chart counts
+ which.min(spotify_data_clean$Spotify_Charts_Count)
+ spotify_data_clean [207,1:2]
+ spotify_data_clean[207,13:20]
+ 
+ #Max in Spotify playlist counts 
+ which.max(spotify_data_clean$Spotify_Playlist_Count)
+ spotify_data_clean [758, 1:2]
+ spotify_data_clean [758,  13:20]
+ 
+ which.min(spotify_data_clean$Spotify_Playlist_Count)
+ spotify_data_clean [95, 1:2]
+ spotify_data_clean [95,  13:20]
+ 
+ #Max in total streams song is  Blinding Lights  Artist name The Weeknd  release 2019
+ #BMP 171, Energy is 80 Speechiness is 7 Acoustics is 0
+#Max in Spotify Charts count- Seven  by latto, Jung Kook 
+ #BMP 125 Energy 83 Speech 4 Acoustics 31
+ #Max Spotify playlist counts- Get Lucky by Pharrell Williams
+ #BMP 116 energy 81 Acoustic 4 Speech 4
+ #mean based on Max output 
+mean_bpm<-mean(171,125,116)
+mean_energy<-mean(80,83,781)
+mean_speech<- mean(7,4,4)
+mean_speech
+mean_acoustics<- mean (0,31,4)
+mean_acoustics
+ ##Linear regression with only significant variables
+linear_regression4 <- lm(formula = Total_Streams ~ 0+Beats_per_Minute+Energy+Acousticness+ Speechiness,data=spotify_data_clean)
+summary(linear_regression4)
+#Prediction
+est <- data.frame(Beats_per_Minute = 171, Energy=80,Speechiness = 7, Acousticness =0)
+predict(linear_regression4, est, type="response")
+#Prediction output 593425615  v current spotify highest stream song of 3703895074
+#Min in Total Streams is Love Grows  by Edison Lighthouse  relase date 1970
+#BPM 110, Energy 69 Speech is 3 Acoustics 7
+ 
+#Min in Spotify Chart Counts  -  Hits Different  by Taylor Swift 
+#BMP 106 energy 78 Speech 4 Acoustics 15
+ #Min Spotify Playlist – Still with You by Jung Kook
+#BMP 88, energy 47 Acoustics 9 Speech 4
+
+
+ #Histograms
+ hist(spotify_data_clean$Spotify_Charts_Count)
+ hist(spotify_data_clean$Apple_Charts_Count)
+ hist(spotify_data_clean$Deezer_Charts_Count)
+ hist(spotify_data_clean$Shazam_Charts_Count)
+ 
+# 4 Chart visual hist on Streaming platforms chart counts 
+ 
+ par(mfrow = c(2, 2))
+ hist(spotify_data_clean$Spotify_Charts_Count, main = "Spotify Charts", xlab = "Charts_Count", col = "lightblue")
+ hist(spotify_data_clean$Apple_Charts_Count, main = "Apple Charts", xlab = "Charts_Count", col = "lightgreen")
+ hist(spotify_data_clean$Deezer_Charts_Count, main = "Deezer Charts", xlab = "Charts_Count", col = "lightcoral")
+ hist(spotify_data_clean$Shazam_Charts_Count, main = "Shazam Charts", xlab = "Charts_Count", col = "lightyellow")
+ par(mfrow = c(1, 1))
+
+#Top 10 Artist  shows Taylor Swifts appears the most times in the Top 1000 streamed songs. +
+ #However,  based on the max stream The Weekend is the most streamed song. 
+ top_artists <- spotify_data_clean %>% count(Artist_Name) %>% arrange(desc(n)) %>% top_n(10)
+ ggplot(top_artists, aes(x = reorder(Artist_Name, -n), y = n)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Top 10 Artists in the Dataset", x = "Artist_Name", y = "Count") +
+   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ 
+#Mode comparison
+ Top_mode <-spotify_data_clean %>% count(Mode) %>% arrange(desc(n)) %>% top_n(10)
+ ggplot(Top_mode, aes(x = reorder(Mode, -n), y = n)) +
+   geom_bar(stat = "identity", fill = "skyblue") +
+   labs(title = "Top Mode in the Dataset", x = "Mode", y = "Count") +
+   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#Scatterplot with significant attributes 
+# Sort the data by 'bpm'
+sorted_data <- spotify_data_clean %>%arrange(Beats_per_Minute)
+#create a new column that combines song title and artist name 
+sorted_data <- sorted_data %>%
+  mutate(Song_Title_and_Artist_Name = paste(Song_Title, ' - ', Artist_Name, sep = ' '))
+
+# Create a scatter plot using ggplot2 Total streams v. Enery v BPM 
+ggplot(sorted_data, aes(x = Energy, y = Total_Streams, color = Beats_per_Minute)) +
+  geom_point(alpha = 0.7) +
+  scale_color_gradientn(colors = c("blue", "orange","yellow"), guide = "colorbar") +
+  labs(title = 'Streams vs Energy vs BPM',
+       x = 'Energy',
+       y = 'Total_Streams',
+       color = 'Beats_per_minute') +
+  theme_minimal()
+# scatterplot for Total streams v Speechiness v Acoustics
+
+  	
+sorted_data<- spotify_data_clean %>%arrange(Acousticness)
+ggplot(sorted_data, aes(x=Speechiness,y =Total_Streams, color = Acousticness)) +
+  geom_point(alpha = 0.7) +
+  scale_color_gradientn(colors = c("blue", "orange", "yellow"), guide = "colorbar") +
+  labs(title = 'Streams vs Acousticness vs Speech',
+       x = 'Speechniess',
+       y = 'Total_Streams',
+       color = 'Acousticness') +
+  theme_minimal()
+ 
