@@ -73,7 +73,7 @@ spotify_data_clean$Shazam_Charts_Count <- as.numeric(spotify_data_clean$Shazam_C
 spotify_data_clean$Days_Since_Today <- as.numeric(Sys.Date() - spotify_data_clean$Song_Release_Date)
 
 # Remove unnecessary columns
-spotify_data_clean <- subset(spotify_data_clean, select = -c(Artist_Count, Key, Mode))
+spotify_data_clean <- subset(spotify_data_clean, select = -c(Artist_Count))
 
 # Rearrange column order
 spotify_data_clean <- spotify_data_clean[, c("Song_Title",
@@ -88,6 +88,8 @@ spotify_data_clean <- spotify_data_clean[, c("Song_Title",
                                              "Deezer_Playlist_Count",
                                              "Deezer_Charts_Count",
                                              "Shazam_Charts_Count",
+                                             "Mode",
+                                             "Key",
                                              "Beats_per_Minute",
                                              "Danceability",
                                              "Valence",
@@ -119,7 +121,9 @@ Spotify_data_correlation <- subset(spotify_data_clean, select = -c(Song_Title,
                                                                    Apple_Charts_Count, 
                                                                    Deezer_Playlist_Count, 
                                                                    Deezer_Charts_Count, 
-                                                                   Shazam_Charts_Count))
+                                                                   Shazam_Charts_Count,
+                                                                   Mode,
+                                                                   Key))
 
 #Review Metrics
 hist(spotify_data_clean$Speechiness ,xlab='Speechiness ',main='Histogram of Spotify Top 1000 Songs Speechiness Metric', col="skyblue1",breaks = seq(min(spotify_data_clean$Speechiness), max(spotify_data_clean$Speechiness)), length.out = 7, probability = TRUE)
@@ -256,13 +260,44 @@ ggplot(top_songs, aes(x = Song_Title, y = Total_Streams, fill = Song_Title)) +
   xlab("Song") +
   ylab("Total Streams")
 
+#Top 10 songs by Song count 
+top_artists <- spotify_data_clean %>% count(Artist_Name) %>% arrange(desc(n)) %>% top_n(10)
+ggplot(top_artists, aes(x = reorder(Artist_Name, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Top 10 Artists in the Dataset", x = "Artist_Name", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
 # Top 10 Artists based on Streams
-top_artists <- spotify_data_clean %>%
+top_artists2 <- spotify_data_clean %>%
   group_by(Artist_Name) %>%
   summarise(Total_Streams = sum(Total_Streams)) %>%
   arrange(desc(Total_Streams)) %>%
   head(10)
-top_artists
+top_artists2
+
+
+# Create a ggplot bar plot
+ggplot(top_artists2, aes(x = reorder(Artist_Name, -Total_Streams), y = Total_Streams)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Top 10 Artists by Total Streams", x = "Artist", y = "Total Streams") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+##Histograms of the 4 attributes 
+par(mfrow = c(2, 2))
+hist(spotify_data_clean$Beats_per_Minute, main = "Beats_per_Minute", xlab = "BPM", col = "lightblue")
+hist(spotify_data_clean$Energy, main = "Energy", xlab = "Energy_%", col = "lightgreen")
+hist(spotify_data_clean$Speechiness, main = "Speech", xlab = "Speech_%", col = "lightcoral")
+hist(spotify_data_clean$Acousticness, main = "Acoustics", xlab = "Acoustics_%", col = "lightyellow")
+par(mfrow = c(1, 1))
+
+#Mode comparison
+Top_mode <-spotify_data_clean %>% count(Mode) %>% arrange(desc(n)) %>% top_n(10)
+ggplot(Top_mode, aes(x = reorder(Mode, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Mode Type ", x = "Mode", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Bar Plots 
 # Bar plot total stream v Danceability
@@ -382,14 +417,6 @@ hist(spotify_data_clean$Apple_Charts_Count, main = "Apple Charts", xlab = "Chart
 hist(spotify_data_clean$Deezer_Charts_Count, main = "Deezer Charts", xlab = "Charts_Count", col = "lightcoral")
 hist(spotify_data_clean$Shazam_Charts_Count, main = "Shazam Charts", xlab = "Charts_Count", col = "lightyellow")
 par(mfrow = c(1, 1))
-
-# Top 10 Artist  shows Taylor Swifts appears the most times in the Top 1000 streamed songs. +
-# However,  based on the max stream The Weekend is the most streamed song. 
-top_artists <- spotify_data_clean %>% count(Artist_Name) %>% arrange(desc(n)) %>% top_n(10)
-ggplot(top_artists, aes(x = reorder(Artist_Name, -n), y = n)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  labs(title = "Top 10 Artists in the Dataset", x = "Artist_Name", y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Scatterplot with significant attributes 
 # Sort the data by 'bpm'
